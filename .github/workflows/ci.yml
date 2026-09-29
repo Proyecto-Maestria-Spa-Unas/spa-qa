@@ -1,0 +1,21 @@
+name: ci
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+
+jobs:
+  politica:
+    if: github.event_name == 'pull_request'
+    uses: Proyecto-Maestria-Spa-Unas/spa-devops-workflows/.github/workflows/pr-policy.yml@main
+
+  calidad:
+    uses: Proyecto-Maestria-Spa-Unas/spa-devops-workflows/.github/workflows/python-ci.yml@main
+    with:
+      package: suites
+      coverage-min: 0
+      with-postgres: false

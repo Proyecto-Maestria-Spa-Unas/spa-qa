@@ -1,0 +1,20 @@
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "N", "SIM"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["suites"]
+addopts = "-q -rs"
+markers = [
+  "hu(id): historia de usuario que valida la prueba (trazabilidad obligatoria en pruebas funcionales)",
+  "funcional: prueba de criterio de aceptación",
+  "humo: verificación mínima de disponibilidad",
+  "lento: excluida de la puerta de QA en PR",
+]
