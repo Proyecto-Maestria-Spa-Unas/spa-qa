@@ -145,3 +145,74 @@ Cuando la variable de organización `ENABLE_QA_GATE` está en `true`, cada Pull 
 1. Crear la rama desde `develop`: `git checkout -b test/HU-07-salidas`.
 2. Abrir un Pull Request hacia `develop`.
 3. El PR se fusiona cuando pasan `politica / pr` y `calidad / pipeline` y lo aprueba el equipo de QA.
+
+## 🌿 Cómo contribuir
+
+### 1️⃣ Clonar el repositorio (solo la primera vez)
+
+Use **Git Bash** en Windows o la terminal en Linux/Mac:
+
+```
+git config --global core.autocrlf input
+git clone https://github.com/Proyecto-Maestria-Spa-Unas/spa-qa.git
+cd spa-qa
+git switch develop
+```
+
+### 2️⃣ Crear la rama de su tarea
+
+Nunca se trabaja directamente sobre `main` ni `develop`: GitHub rechaza esos push. Cada tarea tiene su rama, creada desde `develop` actualizada:
+
+```
+git switch develop
+git pull
+git switch -c test/Q1-plan-pruebas-catalogo
+```
+
+Formato obligatorio: **`tipo/ID-descripcion-corta`**. El `ID` es el de la tarea del sprint en mayúscula (D1, B2, F3, Q1…) y la descripción va en minúsculas, con guiones y sin espacios ni tildes.
+
+| Tipo | Úselo para |
+|---|---|
+| `feature/` | Funcionalidad nueva |
+| `fix/` | Corrección de un defecto |
+| `docs/` | Documentación |
+| `test/` | Pruebas |
+| `refactor/` | Mejora interna sin cambio funcional |
+| `chore/` · `ci/` | Mantenimiento y automatización |
+
+### 3️⃣ Guardar y subir los cambios
+
+```
+git add .
+git commit -s -m "test(catalogo): plan y casos de prueba del catálogo (Q1)"
+git push -u origin test/Q1-plan-pruebas-catalogo
+```
+
+El mensaje sigue **Conventional Commits**: `tipo(alcance): descripción (ID)`. La opción `-s` firma el commit.
+
+### 4️⃣ Abrir el Pull Request
+
+```
+gh pr create --base develop --fill
+```
+
+O desde GitHub con el botón **Compare & pull request**. En la descripción escriba `Closes Proyecto-Maestria-Spa-Unas/spa-qa#<número de la tarea>`. El PR se fusiona cuando los checks obligatorios están en verde.
+
+### 5️⃣ Mantener su rama al día
+
+Si `develop` avanzó mientras usted trabajaba:
+
+```
+git switch develop
+git pull
+git switch -
+git rebase develop
+git push --force-with-lease
+```
+
+`--force-with-lease` solo se usa sobre **su propia rama**, nunca sobre `main` ni `develop`.
+
+### ❌ Qué no hacer
+
+* No subir archivos `.env`, contraseñas ni llaves: el escaneo de seguridad bloqueará el PR.
+* No mezclar varias tareas en una misma rama: una rama, una tarea, un PR.
