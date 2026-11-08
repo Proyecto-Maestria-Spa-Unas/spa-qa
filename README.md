@@ -123,6 +123,13 @@ Marcadores disponibles: `funcional`, `hu("HU-xx")`, `humo` (disponibilidad míni
 |---|---|
 | `API_BASE_URL` | URL base del backend bajo prueba |
 | `WEB_BASE_URL` | URL base del frontend bajo prueba |
+| `QA_ADMINISTRADOR_CORREO` / `QA_ADMINISTRADOR_CONTRASENA` | Usuario de prueba activo con rol Administrador |
+| `QA_MANICURISTA_CORREO` / `QA_MANICURISTA_CONTRASENA` | Usuario de prueba activo con rol Manicurista |
+| `QA_GERENTE_CORREO` / `QA_GERENTE_CONTRASENA` | Usuario de prueba activo con rol Gerente |
+| `QA_INACTIVO_CORREO` / `QA_INACTIVO_CONTRASENA` | Usuario desactivado (CP-HU01-04) |
+| `QA_PERMITIR_ESCRITURA` | `1` habilita los casos que crean o cambian datos (usuarios `qa-…@example.test`, productos `QA-…`) |
+
+Sin las credenciales de un rol, sus casos quedan omitidos. Los endpoints que aún responden 501 dejan sus casos omitidos con la tarea pendiente.
 
 ⚠️ No se deben guardar credenciales de usuarios de prueba en el código; se inyectan como variables de entorno o secretos de GitHub.
 
