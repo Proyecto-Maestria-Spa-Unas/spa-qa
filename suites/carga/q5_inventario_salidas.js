@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check, fail } from 'k6';
+import { check, fail, sleep } from 'k6';
 import { Counter, Rate, Trend } from 'k6/metrics';
 
 const api = `${__ENV.API_BASE_URL}/api/v1`;
@@ -51,6 +51,8 @@ export function setup() {
 }
 
 export default function (data) {
+  // Mantiene cada VU activo para que los 20 arranquen juntos antes de medir.
+  sleep(2);
   const headers = { Authorization: `Bearer ${data.token}` };
   const lectura = http.get(`${api}/productos/${productoId}`, {
     headers,
