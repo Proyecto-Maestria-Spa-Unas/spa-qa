@@ -1,7 +1,6 @@
 import http from 'k6/http';
 import { check, fail } from 'k6';
 import { Counter, Rate, Trend } from 'k6/metrics';
-import { randomUUID } from 'k6/crypto';
 
 const api = `${__ENV.API_BASE_URL}/api/v1`;
 const productoId = __ENV.QA_PRODUCTO_ID;
@@ -17,9 +16,9 @@ const duracionSalida = new Trend('q5_registro_salida_ms');
 export const options = {
   scenarios: {
     q5_20_usuarios: {
-      executor: 'shared-iterations',
+      executor: 'per-vu-iterations',
       vus: 20,
-      iterations: 20,
+      iterations: 1,
       maxDuration: '2m',
     },
   },
@@ -62,9 +61,9 @@ export default function (data) {
   });
   consultas.add(1);
   duracionConsulta.add(lectura.timings.duration);
+  erroresEscenario.add(!lecturaOk);
 
   if (!lecturaOk) {
-    erroresEscenario.add(1);
     return;
   }
 
@@ -80,7 +79,7 @@ export default function (data) {
       headers: {
         ...headers,
         'Content-Type': 'application/json',
-        'Idempotency-Key': randomUUID(),
+        'Idempotency-Key': crypto.randomUUID(),
       },
       tags: { name: 'POST /movimientos/salidas' },
     },
@@ -89,9 +88,8 @@ export default function (data) {
     'salida de inventario responde 201': (r) => r.status === 201,
   });
   duracionSalida.add(salida.timings.duration);
+  erroresEscenario.add(!salidaOk);
   if (salidaOk) {
     salidas.add(1);
-  } else {
-    erroresEscenario.add(1);
   }
 }

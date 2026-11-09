@@ -1,6 +1,6 @@
 # Q5 · Prueba de carga de inventario y salidas
 
-Escenario k6 contra staging para RNF-04 / DEC-07. Cada ejecución usa 20 usuarios virtuales y 20 iteraciones totales. Cada iteración consulta el inventario de un producto QA y registra una salida de ese producto.
+Escenario k6 contra staging para RNF-04 / DEC-07. Cada ejecución activa 20 usuarios virtuales y cada usuario ejecuta exactamente una iteración. Cada iteración consulta el inventario de un producto QA y registra una salida de ese producto.
 
 ## Criterios
 
